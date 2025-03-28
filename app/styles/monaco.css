@@ -1,0 +1,40 @@
+/* Monaco Editor customizations */
+.monaco-editor {
+  padding-top: 10px;
+}
+
+.monaco-editor .margin {
+  background-color: #1e1e2e;
+}
+
+.monaco-editor .monaco-editor-background {
+  background-color: #1e1e2e;
+}
+
+.monaco-editor .line-numbers {
+  color: #6c7086;
+}
+
+.monaco-editor .current-line {
+  border: none;
+  background-color: #313244;
+}
+
+.monaco-editor .cursor {
+  background-color: #f5e0dc;
+  border-color: #f5e0dc;
+}
+
+/* Scrollbar customizations */
+.monaco-editor .scrollbar .slider {
+  background: rgba(147, 153, 178, 0.4) !important;
+}
+
+.monaco-editor .scrollbar .slider:hover {
+  background: rgba(147, 153, 178, 0.6) !important;
+}
+
+/* Minimap customizations */
+.monaco-editor .minimap-slider .minimap-slider-horizontal {
+  background: rgba(147, 153, 178, 0.2);
+}
