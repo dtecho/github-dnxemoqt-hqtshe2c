@@ -1,5 +1,6 @@
 {
   "tasks": {
-    "build": "npm install && npm run build"
+    "build": "pnpm install && pnpm run build",
+    "launch": "pnpm run start"
   }
 }

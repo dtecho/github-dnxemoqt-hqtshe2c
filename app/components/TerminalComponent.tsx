@@ -22,7 +22,8 @@ const TerminalComponent: React.FC<TerminalComponentProps> = ({
   const [isTerminalReady, setIsTerminalReady] = useState<boolean>(false);
   const [inputBuffer, setInputBuffer] = useState<string>('');
   const [historyIndex, setHistoryIndex] = useState<number>(-1);
-  
+  const [showHelp, setShowHelp] = useState<boolean>(false); // New feature state
+
   // Initialize terminal
   useEffect(() => {
     if (!terminalRef.current) return;
@@ -95,6 +96,14 @@ const TerminalComponent: React.FC<TerminalComponentProps> = ({
               term.write('^C\r\n');
               setInputBuffer('');
               writePrompt();
+            } else {
+              term.write(key);
+              setInputBuffer(prev => prev + key);
+            }
+            break;
+          case 72: // 'h' key
+            if (domEvent.ctrlKey) {
+              setShowHelp(prev => !prev); // Toggle help display
             } else {
               term.write(key);
               setInputBuffer(prev => prev + key);
@@ -243,7 +252,33 @@ const TerminalComponent: React.FC<TerminalComponentProps> = ({
   }, [isTerminalReady]);
   
   return (
-    <div className="h-full w-full" ref={terminalRef} />
+    <div className="h-full w-full relative">
+      <div ref={terminalRef} className="h-full w-full" />
+      {showHelp && (
+        <div className="absolute top-0 left-0 right-0 bottom-0 bg-black/75 text-white p-4">
+          <h2 className="text-lg font-bold mb-2">Terminal Help</h2>
+          <p>Use the following commands to interact with the terminal:</p>
+          <ul className="list-disc pl-5 mt-2">
+            <li><strong>help</strong>: Show this help message</li>
+            <li><strong>clear</strong>: Clear the terminal</li>
+            <li><strong>echo [text]</strong>: Display text</li>
+            <li><strong>ls [path]</strong>: List files</li>
+            <li><strong>pwd</strong>: Print working directory</li>
+            <li><strong>cd [dir]</strong>: Change directory</li>
+            <li><strong>node [file]</strong>: Run Node.js script</li>
+            <li><strong>python [file]</strong>: Run Python script</li>
+            <li><strong>npm [command]</strong>: Run npm command</li>
+            <li><strong>version</strong>: Show version info</li>
+          </ul>
+          <button
+            onClick={() => setShowHelp(false)}
+            className="mt-4 px-4 py-2 bg-primary text-white rounded"
+          >
+            Close
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
 

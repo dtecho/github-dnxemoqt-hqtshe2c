@@ -9,7 +9,8 @@ interface MainLayoutProps {
 export default function MainLayout({ children }: MainLayoutProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  
+  const [showSettings, setShowSettings] = useState(false);
+
   return (
     <div className="flex h-screen overflow-hidden bg-background text-foreground">
       {/* Desktop Sidebar */}
@@ -42,7 +43,12 @@ export default function MainLayout({ children }: MainLayoutProps) {
             <FiMenu size={24} />
           </button>
           <h1 className="text-xl font-bold text-primary">Deep Tree Echo</h1>
-          <div className="w-10"></div> {/* Spacer for centering title */}
+          <button 
+            onClick={() => setShowSettings(true)}
+            className="p-2 rounded-md hover:bg-primary/10"
+          >
+            <FiSettings size={24} />
+          </button>
         </header>
         
         {/* Page Content */}
@@ -50,6 +56,27 @@ export default function MainLayout({ children }: MainLayoutProps) {
           {children}
         </main>
       </div>
+
+      {/* Settings Modal */}
+      {showSettings && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-card rounded-lg shadow-xl max-w-md w-full p-6">
+            <h2 className="text-xl font-semibold mb-4">Settings</h2>
+            <p className="mb-4 text-sm opacity-80">
+              Configure your preferences for Deep Tree Echo.
+            </p>
+            <div className="flex justify-end space-x-3">
+              <button
+                type="button"
+                onClick={() => setShowSettings(false)}
+                className="px-4 py-2 border border-border rounded-md"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

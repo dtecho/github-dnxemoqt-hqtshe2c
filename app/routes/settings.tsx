@@ -19,7 +19,8 @@ export default function SettingsPage() {
   const [theme, setTheme] = useState(savedTheme);
   const [apiKey, setApiKey] = useState("");
   const [editorPreference, setEditorPreference] = useState("monaco");
-  
+  const [showAdvancedSettings, setShowAdvancedSettings] = useState(false); // New feature state
+
   return (
     <div className="container mx-auto p-6 max-w-4xl">
       <header className="mb-8">
@@ -203,6 +204,56 @@ export default function SettingsPage() {
                   Save Editor Preferences
                 </button>
               </div>
+            </div>
+          </section>
+          
+          {/* Advanced Settings */}
+          <section className="bg-card p-6 rounded-lg">
+            <h2 className="text-xl font-semibold mb-4">Advanced Settings</h2>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Show Advanced Settings
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setShowAdvancedSettings(!showAdvancedSettings)}
+                  className={`p-4 rounded-lg border ${
+                    showAdvancedSettings 
+                      ? "border-primary bg-primary/10" 
+                      : "border-border hover:border-primary/40"
+                  }`}
+                >
+                  {showAdvancedSettings ? "Hide" : "Show"}
+                </button>
+              </div>
+              
+              {showAdvancedSettings && (
+                <div className="space-y-4">
+                  <div>
+                    <label htmlFor="advanced-option-1" className="block text-sm font-medium mb-1">
+                      Advanced Option 1
+                    </label>
+                    <input
+                      type="text"
+                      id="advanced-option-1"
+                      className="w-full bg-input border border-border rounded-md px-3 py-2"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="advanced-option-2" className="block text-sm font-medium mb-1">
+                      Advanced Option 2
+                    </label>
+                    <input
+                      type="text"
+                      id="advanced-option-2"
+                      className="w-full bg-input border border-border rounded-md px-3 py-2"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </section>
         </div>
