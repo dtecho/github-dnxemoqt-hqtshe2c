@@ -145,6 +145,10 @@ export class AIChatService {
     messages = [...messages, ...history.slice(-10)];
 
     try {
+      if (!this.apiKey) {
+        throw new Error('OpenAI API key is not configured. Please configure your API key.');
+      }
+
       if (options.stream) {
         return await this.streamResponse(messages, options);
       } else {

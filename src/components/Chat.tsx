@@ -33,6 +33,7 @@ const Chat = () => {
   const [useMemoryContext, setUseMemoryContext] = useState(true);
   const [useMem0AIContext, setUseMem0AIContext] = useState(true);
   const [model, setModel] = useState('gpt-4-turbo-preview');
+  const [apiKeyConfigured, setApiKeyConfigured] = useState(false); // P632d
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -65,6 +66,7 @@ const Chat = () => {
       setApiKey(storedApiKey);
       setLLMApiKey(storedApiKey);
       setOpenAIApiKey(storedApiKey);
+      setApiKeyConfigured(true); // P632d
       
       // Check if Mem0AI needs initialization
       const checkSession = async () => {
@@ -250,6 +252,7 @@ const Chat = () => {
       setLLMApiKey(apiKey.trim());
       setOpenAIApiKey(apiKey.trim());
       localStorage.setItem('openai_api_key', apiKey.trim());
+      setApiKeyConfigured(true); // P37d7
       
       // Also initialize Mem0AI if user is authenticated
       const initializeMem0AI = async () => {
