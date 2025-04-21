@@ -9,6 +9,10 @@ if (!process.env.SUPABASE_ANON_KEY) {
   throw new Error('SUPABASE_ANON_KEY is required');
 }
 
+if (!process.env.OPENAI_API_KEY) {
+  console.warn('OPENAI_API_KEY is not configured. Some features may not work as expected.');
+}
+
 export const supabaseClient = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_ANON_KEY
