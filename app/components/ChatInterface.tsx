@@ -99,23 +99,39 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
             key={message.id}
             className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
-            <div
-              className={`max-w-[80%] rounded-lg p-3 ${
-                message.role === 'user'
-                  ? 'bg-primary/20 text-foreground'
-                  : 'bg-card text-card-foreground'
-              }`}
-            >
-              <div className="prose prose-sm dark:prose-invert">
-                {message.content.split('\n').map((line, i) => (
-                  <p key={i} className={i === 0 ? 'mt-0' : ''}>
-                    {line}
-                  </p>
-                ))}
+            <div className="flex items-end space-x-2">
+              {message.role !== 'user' && (
+                <img
+                  src="/path/to/assistant-avatar.png"
+                  alt="Assistant Avatar"
+                  className="w-8 h-8 rounded-full"
+                />
+              )}
+              <div
+                className={`max-w-[80%] rounded-lg p-3 ${
+                  message.role === 'user'
+                    ? 'bg-primary/20 text-foreground'
+                    : 'bg-card text-card-foreground'
+                }`}
+              >
+                <div className="prose prose-sm dark:prose-invert">
+                  {message.content.split('\n').map((line, i) => (
+                    <p key={i} className={i === 0 ? 'mt-0' : ''}>
+                      {line}
+                    </p>
+                  ))}
+                </div>
+                <div className="text-xs opacity-70 mt-1">
+                  {new Date(message.timestamp).toLocaleTimeString()}
+                </div>
               </div>
-              <div className="text-xs opacity-70 mt-1">
-                {new Date(message.timestamp).toLocaleTimeString()}
-              </div>
+              {message.role === 'user' && (
+                <img
+                  src="/path/to/user-avatar.png"
+                  alt="User Avatar"
+                  className="w-8 h-8 rounded-full"
+                />
+              )}
             </div>
           </div>
         ))}
