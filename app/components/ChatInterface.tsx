@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { FiSend, FiSettings, FiInfo, FiSmile } from 'react-icons/fi';
 import { Picker } from 'emoji-mart';
-import 'emoji-mart/css/emoji-mart.css';
+import 'emoji-mart/css/emoji-mart.css?__remix_sideEffect__';
 
 export interface Message {
   id: string;
