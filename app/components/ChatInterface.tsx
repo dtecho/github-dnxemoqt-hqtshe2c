@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
-import { FiSend, FiSettings, FiInfo } from 'react-icons/fi';
+import { FiSend, FiSettings, FiInfo, FiSmile } from 'react-icons/fi';
+import { Picker } from 'emoji-mart';
+import 'emoji-mart/css/emoji-mart.css';
 
 export interface Message {
   id: string;
@@ -24,6 +26,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
   onConfigureApiKey
 }) => {
   const [input, setInput] = useState('');
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   
@@ -46,6 +49,14 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     if (input.trim() && !isProcessing) {
       onSendMessage(input);
       setInput('');
+    }
+  };
+
+  const handleEmojiSelect = (emoji: any) => {
+    setInput(input + emoji.native);
+    setShowEmojiPicker(false);
+    if (inputRef.current) {
+      inputRef.current.focus();
     }
   };
   
@@ -139,19 +150,32 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
       
       {/* Input */}
       <div className="border-t border-border p-4">
-        <form onSubmit={handleSubmit} className="flex">
+        <form onSubmit={handleSubmit} className="flex items-center">
+          <button
+            type="button"
+            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+            className="p-2 rounded-l-md border border-border bg-input hover:bg-primary/20"
+            title="Emoji Picker"
+          >
+            <FiSmile size={18} />
+          </button>
+          {showEmojiPicker && (
+            <div className="absolute bottom-16 left-4 z-50">
+              <Picker onSelect={handleEmojiSelect} />
+            </div>
+          )}
           <input
             ref={inputRef}
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
-            className="flex-1 bg-input border border-border rounded-l-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-primary"
+            className="flex-1 bg-input border-t border-b border-border px-4 py-2 focus:outline-none focus:ring-1 focus:ring-primary"
             disabled={isProcessing}
           />
           <button
             type="submit"
-            className="bg-primary text-white px-4 py-2 rounded-r-md disabled:opacity-50"
+            className="bg-primary text-white px-4 py-2 rounded-r-md border border-border disabled:opacity-50"
             disabled={!input.trim() || isProcessing}
           >
             {isProcessing ? (
